@@ -29,6 +29,7 @@
     "dotenv": "^16.3.1",
     "fullpage.js": "^4.0.20",
     "gsap": "^3.12.5",
+    "jsonwebtoken": "^9.0.2",
     "react-bootstrap": "^2.8.0",
     "react-bubble-ui": "github:Exrelativity/React-Bubble-UI",
     "simplex-noise": "^4.0.1",

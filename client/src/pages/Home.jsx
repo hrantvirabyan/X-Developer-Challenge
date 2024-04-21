@@ -1,6 +1,8 @@
 import logo from "/assets/x-twitter.svg"
 import ParticleSystem from "../components/ParticleSystem"
 const Home = () => {
+
+
   return (
     <>
     <div className="intro-wrapper">
@@ -12,7 +14,7 @@ const Home = () => {
           <h1 style={{fontFamily:"TwitterChirpExtendedHeavy", fontSize:"50px"}}>Seek <br/> Self-Discovery</h1>
           <button>
             <div>
-              Sign In
+              <a href="http://localhost:5000/start">Sign In</a>
             </div>
           </button>
       </div>

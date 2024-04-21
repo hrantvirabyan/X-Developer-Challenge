@@ -2,11 +2,24 @@ import arrow from "/assets/x-arrow.svg"
 import search from "/assets/x-search.svg"
 import "react-bubble-ui/dist/index.css"
 import BubbleUI from "react-bubble-ui"
+import {useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+
+
+// const [evolutions, setEvolutions] = useState(" ")
+// const [evolutionLoading, setEvolutionLoading] = useState(true)
 
 
 
+const Evolutions = (props) => {
 
-const Evolutions = () => {
+
+  const [searchParams] = useSearchParams();
+  if(searchParams.get('token') != null){ 
+    document.cookie=`token=${searchParams.get('token')}`
+  }
+
+
   var colors = [
     "#FF00FF", // Neon Magenta
     "#00FFFF", // Neon Cyan
@@ -41,6 +54,12 @@ const Evolutions = () => {
 		compact: true,
 		gravitation: 5
 	}
+
+  useEffect(()=>{
+
+
+  }, [])
+
   var basedata = {
     "1": { name: "Azure", value: 0.748 },
     "2": { name: "Google", value: 0.621 },
@@ -114,9 +133,10 @@ const Evolutions = () => {
                     <img id="x-arrow" src={arrow}/>
                     <span id="header-title">Evolutions</span>
             </div>
-            <BubbleUI options={options} className="bubbleUI">
-		            {children}
-	          </BubbleUI>
+              <BubbleUI options={options} className="bubbleUI">
+              {children}
+          </BubbleUI>
+          
             </div>
             <div className="tool-bar-wrapper">
                 <div className="search">
