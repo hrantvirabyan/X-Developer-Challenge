@@ -13,7 +13,7 @@ const Home = () => {
             </div>
           <h1 style={{fontFamily:"TwitterChirpExtendedHeavy", fontSize:"50px"}}>Seek <br/> Self-Discovery</h1>
           <button>
-            <div onClick={()=>{window.location.assign("http://localhost:5000/start")}}>
+            <div onClick={()=>{window.location.assign("http://localhost:8000/start")}}>
               Sign In
             </div>
           </button>

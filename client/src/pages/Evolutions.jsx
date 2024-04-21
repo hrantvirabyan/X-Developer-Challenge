@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie"
 import logo from "/assets/x-logo.svg"
 import axios from 'axios'
+import { askGronk } from "../utils/helpers/functions";
 
 
 
@@ -44,7 +45,7 @@ const Evolutions = (props) => {
     "#40E0D0"  // Neon Turquoise
   ];
   
-  
+  const [gronkSummary, setSummary] = useState("")
   
   const options = {
 		size: 180,
@@ -61,31 +62,15 @@ const Evolutions = (props) => {
 		gravitation: 5
 	}
 
-  const handleCategory = (topic) =>{
-    // Assuming your FastAPI server is running at http://localhost:5000
-const baseURL = 'http://localhost:5000';
-
-// Sample search query
-const searchQuery = {
-  keyword: 'python', // Change this to your desired keyword
-  max_results: 10 // Change this to the maximum number of results you want
-};
-
-// Making a POST request to the search_tweets endpoint
-axios.post(`${baseURL}/search_tweets`, searchQuery)
-  .then(response => {
-    console.log('Response:', response.data);
-    // Handle the response data here
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Handle errors here
-  });
+  const handleCategory = async(topic) =>{
+      console.log(topic.name)
+      let response =  await askGronk({keyword: topic.name})
+      setSummary(response.summary)
   }
 
   useEffect(()=>{
 
-      fetch("http://localhost:5000/fetch_tweets",{
+      fetch("http://localhost:8000/fetch_tweets",{
         method:"POST",
         headers: {
           "Content-Type": "application/json"
@@ -159,6 +144,12 @@ axios.post(`${baseURL}/search_tweets`, searchQuery)
                 <div className="grok-response-container">
                     <div className="tool-bar-heading">
                       <h2>Insight</h2>
+                      <div>
+                        {gronkSummary != "" ? 
+                        gronkSummary:
+                        <></>  
+                      }
+                      </div>
                     </div>
                 </div>
             </div>
