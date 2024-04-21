@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import logo from "/assets/x-twitter.svg"
 
 
 const Header = () => {
@@ -17,10 +17,12 @@ const Header = () => {
         setLoggedIn(false);
     };
 
+
     return (
-        <header>
+        <header className="header-bar" >
+            
             <nav>
-                <ul>
+                {/* <ul>
                     <li >
                         <a className="primary"href="/">Home</a>
                     </li>
@@ -30,7 +32,7 @@ const Header = () => {
                     <li>
                         <button onClick={handleLogout}>Logout</button>
                     </li>
-                </ul>
+                </ul> */}
             </nav>
         </header>
     );
