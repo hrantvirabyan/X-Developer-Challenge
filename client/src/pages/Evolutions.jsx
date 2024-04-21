@@ -4,20 +4,26 @@ import "react-bubble-ui/dist/index.css"
 import BubbleUI from "react-bubble-ui"
 import {useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie"
+import logo from "/assets/x-logo.svg"
+import axios from 'axios'
 
 
-// const [evolutions, setEvolutions] = useState(" ")
-// const [evolutionLoading, setEvolutionLoading] = useState(true)
+
 
 
 
 const Evolutions = (props) => {
+  const [evolutions, setEvolutions] = useState({})
+  const [evolutionLoading, setEvolutionLoading] = useState(true)
+
 
 
   const [searchParams] = useSearchParams();
   if(searchParams.get('token') != null){ 
     document.cookie=`token=${searchParams.get('token')}`
   }
+  
 
 
   var colors = [
@@ -55,76 +61,65 @@ const Evolutions = (props) => {
 		gravitation: 5
 	}
 
+  const handleCategory = (topic) =>{
+    // Assuming your FastAPI server is running at http://localhost:5000
+const baseURL = 'http://localhost:5000';
+
+// Sample search query
+const searchQuery = {
+  keyword: 'python', // Change this to your desired keyword
+  max_results: 10 // Change this to the maximum number of results you want
+};
+
+// Making a POST request to the search_tweets endpoint
+axios.post(`${baseURL}/search_tweets`, searchQuery)
+  .then(response => {
+    console.log('Response:', response.data);
+    // Handle the response data here
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Handle errors here
+  });
+  }
+
   useEffect(()=>{
 
+      fetch("http://localhost:5000/fetch_tweets",{
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(
+          {
+            "token": Cookies.get('token')
+          }
+          )}
+        )
+        .then(response => response.json())
+        .then(data => {
+
+
+          setEvolutionLoading(false)
+          setEvolutions(data)
+          console.log(data)
+        })
+        .catch(error => console.error(error));
 
   }, [])
 
-  var basedata = {
-    "1": { name: "Azure", value: 0.748 },
-    "2": { name: "Google", value: 0.621 },
-    "3": { name: "Amazon", value: 0.893 },
-    "4": { name: "IBM", value: 0.429 },
-    "5": { name: "Salesforce", value: 0.517 },
-    "6": { name: "Oracle", value: 0.673 },
-    "7": { name: "Alibaba Cloud", value: 0.814 },
-    "8": { name: "Huawei Cloud", value: 0.349 },
-    "9": { name: "Tencent Cloud", value: 0.965 },
-    "10": { name: "DigitalOcean", value: 0.202 },
-    "11": { name: "Rackspace", value: 0.739 },
-    "12": { name: "VMware", value: 0.158 },
-    "13": { name: "Red Hat", value: 0.876 },
-    "14": { name: "Cisco", value: 0.495 },
-    "15": { name: "HP", value: 0.371 },
-    "16": { name: "Dell", value: 0.724 },
-    "17": { name: "Lenovo", value: 0.956 },
-    "18": { name: "NetApp", value: 0.284 },
-    "19": { name: "Juniper Networks", value: 0.632 },
-    "20": { name: "Splunk", value: 0.802 },
-    "21": { name: "Adobe", value: 0.417 },
-    "22": { name: "NVIDIA", value: 0.729 },
-    "23": { name: "Intel", value: 0.948 },
-    "24": { name: "AMD", value: 0.526 },
-    "25": { name: "Qualcomm", value: 0.647 },
-    "26": { name: "Micron", value: 0.134 },
-    "27": { name: "Western Digital", value: 0.877 },
-    "28": { name: "Seagate", value: 0.381 },
-    "29": { name: "Samsung", value: 0.925 },
-    "30": { name: "Apple", value: 0.285 },
-    "31": { name: "Microsoft", value: 0.963 },
-    "32": { name: "Facebook", value: 0.541 },
-    "33": { name: "Apple", value: 0.709 },
-    "34": { name: "Netflix", value: 0.876 },
-    "35": { name: "Uber", value: 0.603 },
-    "36": { name: "Airbnb", value: 0.498 },
-    "37": { name: "Twitter", value: 0.784 },
-    "38": { name: "Snap", value: 0.257 },
-    "39": { name: "Pinterest", value: 0.671 },
-    "40": { name: "LinkedIn", value: 0.863 },
-    "41": { name: "Dropbox", value: 0.325 },
-    "42": { name: "Slack", value: 0.738 },
-    "43": { name: "Zoom", value: 0.948 },
-    "44": { name: "TikTok", value: 0.412 },
-    "45": { name: "WhatsApp", value: 0.837 },
-    "46": { name: "Telegram", value: 0.295 },
-    "47": { name: "Signal", value: 0.671 },
-    "48": { name: "WeChat", value: 0.972 },
-    "49": { name: "Skype", value: 0.576 },
-    "50": { name: "Discord", value: 0.318 }
-  };
-  
-	const children = Object.values(basedata).map((data, i) => {
 
-  const bubbleStyle = {
-    fontSize: 50 * data.value,
-  };
 
-  return <div className="bubble-entry" style={bubbleStyle}>{data.name}</div>;
- });
+
     return (
       <>
        <div className="evolutions-page-wrapper">
         <div className="spacer">
+          <div className="navigation">
+              <div className="nav-section">
+                <img src={logo}/>
+              </div>
+          </div>
           
         </div>
         <div className="evolutions-wrapper">
@@ -133,20 +128,33 @@ const Evolutions = (props) => {
                     <img id="x-arrow" src={arrow}/>
                     <span id="header-title">Evolutions</span>
             </div>
+            {evolutionLoading ? 
+            <div>Loading</div>
+              :
               <BubbleUI options={options} className="bubbleUI">
-              {children}
-          </BubbleUI>
+
+                {evolutions.domains.map((data, i) => {
+                  const bubbleStyle = {
+                    cursor: "pointer",
+                    fontWeight: (data.proportion * 100) < 5 ? "400" : `${400 + (800 * (data.proportion))}px`,
+                    fontSize: (data.proportion * 100) < 5 ? "20px" : `${20 + (50 * (data.proportion))}px`,
+                    height: `${(500 * (data.proportion))}px`,
+                    width:  `${(500 *(data.proportion))}px`,
+                    color:"white",
+                    backgroundColor:"black",
+                    border:"none",
+                    zIndex:90,
+                  };
+                        return <div className="bubble-entry" style={bubbleStyle} onClick={()=>{handleCategory(data.entities[0])}}>{data.name}</div>;
+                  })}
+              </BubbleUI>
+          }
           
             </div>
             <div className="tool-bar-wrapper">
                 <div className="search">
                       <img src={search}/>
                       <span>Search</span>
-                </div>
-                <div className="tweet-query-container">
-                    <div className="tool-bar-heading">
-                      <h2>Relevant Posts</h2>
-                    </div>
                 </div>
                 <div className="grok-response-container">
                     <div className="tool-bar-heading">
@@ -162,3 +170,58 @@ const Evolutions = (props) => {
   }
   
   export default Evolutions;
+
+
+
+// @Author https://www.geeksforgeeks.org/bitonic-sort/
+  function compAndSwap(a, i, j, dir) {
+    if ((a[i] > a[j] && dir === 1) || 
+    (a[i] < a[j] && dir === 0))
+    {
+      // Swapping elements
+      var temp = a[i];
+      a[i] = a[j];
+      a[j] = temp;
+    }
+  }
+
+  /* It recursively sorts a bitonic sequence in ascending
+order, if dir = 1, and in descending order otherwise
+(means dir=0). The sequence to be sorted starts at
+index position low, the parameter cnt is the number
+of elements to be sorted.*/
+  function bitonicMerge(a, low, cnt, dir) {
+    if (cnt > 1) {
+      var k = parseInt(cnt / 2);
+      for (var i = low; i < low + k; i++) 
+      compAndSwap(a, i, i + k, dir);
+      bitonicMerge(a, low, k, dir);
+      bitonicMerge(a, low + k, k, dir);
+    }
+  }
+
+  /* This function first produces a bitonic sequence by
+recursively sorting its two halves in opposite sorting
+orders, and then calls bitonicMerge to make them in
+the same order */
+  function bitonicSort(a, low, cnt, dir) {
+    if (cnt > 1) {
+      var k = parseInt(cnt / 2);
+
+      // sort in ascending order since dir here is 1
+      bitonicSort(a, low, k, 1);
+
+      // sort in descending order since dir here is 0
+      bitonicSort(a, low + k, k, 0);
+
+      // Will merge whole sequence in ascending order
+      // since dir=1.
+      bitonicMerge(a, low, cnt, dir);
+    }
+  }
+
+  /*Caller of bitonicSort for sorting the entire array
+of length N in ASCENDING order */
+  function sort(a, N, up) {
+    bitonicSort(a, 0, N, up);
+  }

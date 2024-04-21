@@ -129,10 +129,7 @@
    width:100vw;
    display:flex;
 }
-.spacer{ 
-    width:30.463242698892245%;
-    height:100vh
-}
+
 .evolutions-wrapper { 
     width: 990px;
     display:flex;
@@ -198,7 +195,7 @@
 }
 .grok-response-container{ 
     width: 100%;
-    height: 300px;
+    height: 600px;
     border: 1px solid rgb(47, 51, 54);
     border-radius: 16px;
 }
@@ -225,4 +222,25 @@ font-weight: 400;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.navigation { 
+  padding-left:8px;
+  padding-right:8px;
+  width:259px;
+  &> .nav-section{ 
+    height: 50.25px;
+    width:100%;
+    &> img { 
+      height: 30px;
+    }
+  }
+  
+}
+.spacer{ 
+  display:flex;
+  justify-content: flex-end;
+  width:30.463242698892245%;
+  height:100vh
+
 }

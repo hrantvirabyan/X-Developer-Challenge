@@ -1,4 +1,4 @@
-import logo from "/assets/x-twitter.svg"
+import logo from "/assets/x-logo.svg"
 import ParticleSystem from "../components/ParticleSystem"
 const Home = () => {
 
@@ -13,8 +13,8 @@ const Home = () => {
             </div>
           <h1 style={{fontFamily:"TwitterChirpExtendedHeavy", fontSize:"50px"}}>Seek <br/> Self-Discovery</h1>
           <button>
-            <div>
-              <a href="http://localhost:5000/start">Sign In</a>
+            <div onClick={()=>{window.location.assign("http://localhost:5000/start")}}>
+              Sign In
             </div>
           </button>
       </div>
