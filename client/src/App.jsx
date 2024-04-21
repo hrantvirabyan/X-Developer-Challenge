@@ -8,9 +8,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <Header />
+      <Header/>
       <div>
-
         <main>
           <Outlet location={location} key={location.pathname} />
         </main>
