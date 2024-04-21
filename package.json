@@ -30,6 +30,7 @@
     "fullpage.js": "^4.0.20",
     "gsap": "^3.12.5",
     "react-bootstrap": "^2.8.0",
+    "react-bubble-ui": "github:Exrelativity/React-Bubble-UI",
     "simplex-noise": "^4.0.1",
     "stripe": "^13.5.0",
     "three": "^0.163.0"
